@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConsciousCanvas - Dynamic Consciousness Art Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ConsciousCanvas</h1>
+            <p>Visualize your consciousness profile through unique art</p>
+        </header>
+
+        <main>
+            <div class="controls">
+                <div class="parameter-group">
+                    <label for="informationDensity">Information Density (D)</label>
+                    <input type="range" id="informationDensity" min="0" max="100" value="50">
+                    <span class="value-display">50</span>
+                </div>
+
+                <div class="parameter-group">
+                    <label for="knowledgeBase">Knowledge Base (A)</label>
+                    <input type="range" id="knowledgeBase" min="0" max="100" value="50">
+                    <span class="value-display">50</span>
+                </div>
+
+                <div class="parameter-group">
+                    <label for="cognitiveComplexity">Cognitive Complexity (S)</label>
+                    <input type="range" id="cognitiveComplexity" min="0" max="100" value="50">
+                    <span class="value-display">50</span>
+                </div>
+                
+                <div class="quantum-toggle">
+                    <label for="quantumMode">Quantum Mode</label>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="quantumMode">
+                        <span class="toggle-slider"></span>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn">Generate Image</button>
+            </div>
+
+            <div class="canvas-container">
+                <canvas id="artCanvas"></canvas>
+                <div class="loading-indicator">
+                    <div class="spinner"></div>
+                    <p>Generating image...</p>
+                </div>
+                <div class="image-preview">
+                    <img id="generatedImage" alt="Generated Consciousness Art">
+                    <div class="image-info">
+                        <div class="image-info-item">
+                            <div class="image-info-label">Information Density</div>
+                            <div class="image-info-value" id="imageDensity">0</div>
+                        </div>
+                        <div class="image-info-item">
+                            <div class="image-info-label">Knowledge Base</div>
+                            <div class="image-info-value" id="imageKnowledge">0</div>
+                        </div>
+                        <div class="image-info-item">
+                            <div class="image-info-label">Cognitive Complexity</div>
+                            <div class="image-info-value" id="imageComplexity">0</div>
+                        </div>
+                    </div>
+                    <button id="saveImageBtn">Save Image</button>
+                </div>
+            </div>
+
+            <div class="csci-display">
+                <span>CSCI Value: </span>
+                <span id="csciValue">0</span>
+            </div>
+
+            <div class="actions">
+                <button id="saveBtn" class="btn">Save Art</button>
+                <button id="shareBtn" class="btn">Share</button>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
