@@ -1002,4 +1002,10 @@ function updateVisualization() {
     if (generatedImage.src) {
         generateImage();
     }
-} 
+}
+
+// Move the Generate AI Image button below the first image generation
+const firstImageSection = document.querySelector('.canvas-container');
+if (firstImageSection) {
+    firstImageSection.appendChild(generateImageBtn);
+}
