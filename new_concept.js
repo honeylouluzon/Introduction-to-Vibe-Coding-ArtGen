@@ -67,3 +67,20 @@ const D = 50; // Information Density
 const A = 50; // Knowledge Base
 const S = 50; // Cognitive Complexity
 drawSpaceConcept(D, A, S);
+
+// Update the space-themed concept dynamically based on slider values
+const informationDensitySlider = document.getElementById('informationDensity');
+const knowledgeBaseSlider = document.getElementById('knowledgeBase');
+const cognitiveComplexitySlider = document.getElementById('cognitiveComplexity');
+
+function updateSpaceConcept() {
+    const D = parseInt(informationDensitySlider.value);
+    const A = parseInt(knowledgeBaseSlider.value);
+    const S = parseInt(cognitiveComplexitySlider.value);
+    drawSpaceConcept(D, A, S);
+}
+
+// Add event listeners to sliders
+[informationDensitySlider, knowledgeBaseSlider, cognitiveComplexitySlider].forEach(slider => {
+    slider.addEventListener('input', updateSpaceConcept);
+});
