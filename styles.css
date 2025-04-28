@@ -147,7 +147,7 @@ input:checked + .toggle-slider:before {
     margin-top: 10px;
     text-align: center;
     font-weight: 500;
-    font-size: 3em;
+    font-size: 2em;
     font-weight: bold;
 }
 
