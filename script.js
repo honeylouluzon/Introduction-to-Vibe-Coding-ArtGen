@@ -905,13 +905,6 @@ shareBtn.addEventListener('click', () => {
     window.open(tweetUrl, '_blank');
 });
 
-// Add image generation button to the controls
-const generateImageBtn = document.createElement('button');
-generateImageBtn.id = 'generateImageBtn';
-generateImageBtn.textContent = 'Generate AI Image';
-generateImageBtn.className = 'action-btn';
-document.querySelector('.ai-image').appendChild(generateImageBtn);
-
 // Add loading indicator
 const loadingIndicator = document.createElement('div');
 loadingIndicator.id = 'loadingIndicator';
