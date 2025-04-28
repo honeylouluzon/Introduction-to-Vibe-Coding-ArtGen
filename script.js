@@ -998,7 +998,6 @@ function updateVisualization() {
 }
 
 // Add event listener for the new Generate AI Image button
-const generateImageBtn = document.getElementById('generateImageBtn');
 const generatedImageContainer = document.getElementById('generatedImageContainer');
 const generatedImage = document.getElementById('generatedImage');
 
