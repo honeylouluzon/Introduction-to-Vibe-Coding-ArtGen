@@ -156,13 +156,13 @@ newCanvas.addEventListener('mousemove', event => {
     });
 });
 
-// Animation loop
+// Slow down the animation loop by 60%
 function animate() {
     newCtx.clearRect(0, 0, newCanvas.width, newCanvas.height);
     drawSpaceConcept(D, A, S); // Redraw background
     updateStars();
     drawStars();
-    requestAnimationFrame(animate);
+    setTimeout(() => requestAnimationFrame(animate), 16.67 * 1.6); // 60% slower
 }
 
 initializeStars();

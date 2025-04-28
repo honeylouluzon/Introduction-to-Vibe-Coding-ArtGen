@@ -344,3 +344,9 @@ input:checked + .toggle-slider:before {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+#generatedImage {
+    max-width: 50%; /* Reduce width by 50% */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
