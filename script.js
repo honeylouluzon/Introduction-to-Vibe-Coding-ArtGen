@@ -1036,3 +1036,16 @@ generateImageBtn.addEventListener('click', async () => {
     }
 });
 
+// Add event listeners to sliders to update AI image dynamically
+[informationDensity, knowledgeBase, cognitiveComplexity].forEach(slider => {
+    slider.addEventListener('input', () => {
+        const D = parseInt(informationDensity.value);
+        const A = parseInt(knowledgeBase.value);
+        const S = parseInt(cognitiveComplexity.value);
+
+        // Update AI image preview dynamically
+        generatedImage.src = `/generate-image-preview?D=${D}&A=${A}&S=${S}`; // Simulated dynamic update
+        generatedImageContainer.style.display = 'block';
+    });
+});
+
