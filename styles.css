@@ -147,6 +147,8 @@ input:checked + .toggle-slider:before {
     margin-top: 10px;
     text-align: center;
     font-weight: 500;
+    font-size: 3em;
+    font-weight: bold;
 }
 
 .actions {
@@ -342,4 +344,4 @@ input:checked + .toggle-slider:before {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-} 
+}
