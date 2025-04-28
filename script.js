@@ -910,7 +910,7 @@ const generateImageBtn = document.createElement('button');
 generateImageBtn.id = 'generateImageBtn';
 generateImageBtn.textContent = 'Generate AI Image';
 generateImageBtn.className = 'action-btn';
-document.querySelector('.controls').appendChild(generateImageBtn);
+document.querySelector('.ai-image').appendChild(generateImageBtn);
 
 // Add loading indicator
 const loadingIndicator = document.createElement('div');
@@ -1005,7 +1005,7 @@ function updateVisualization() {
 }
 
 // Move the Generate AI Image button below the first image generation
-const firstImageSection = document.querySelector('.canvas-container');
-if (firstImageSection) {
-    firstImageSection.appendChild(generateImageBtn);
-}
+//const firstImageSection = document.querySelector('.canvas-container');
+//if (firstImageSection) {
+//    firstImageSection.appendChild(generateImageBtn);
+//}
