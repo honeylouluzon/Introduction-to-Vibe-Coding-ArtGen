@@ -1049,3 +1049,68 @@ generateImageBtn.addEventListener('click', async () => {
     });
 });
 
+// Import the ConsciousnessImageGenerator class from image_generator.py
+const { exec } = require('child_process');
+
+// Function to trigger AI image generation using image_generator.py
+function generateAIImage(D, A, S) {
+    const command = `python3 image_generator.py ${D} ${A} ${S}`;
+
+    exec(command, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error generating image: ${error.message}`);
+            return;
+        }
+
+        if (stderr) {
+            console.error(`Error output: ${stderr}`);
+            return;
+        }
+
+        console.log(`Image generated successfully: ${stdout}`);
+        const result = JSON.parse(stdout);
+
+        // Update the UI with the generated image
+        const generatedImage = document.getElementById('generatedImage');
+        generatedImage.src = result.path;
+        generatedImage.alt = result.prompt;
+        document.getElementById('generatedImageContainer').style.display = 'block';
+    });
+}
+
+// Update the Generate AI Image button to use the new function
+const generateImageBtn = document.getElementById('generateImageBtn');
+generateImageBtn.addEventListener('click', () => {
+    const D = parseInt(document.getElementById('informationDensity').value);
+    const A = parseInt(document.getElementById('knowledgeBase').value);
+    const S = parseInt(document.getElementById('cognitiveComplexity').value);
+
+    generateImageBtn.textContent = 'Generating...';
+    generateImageBtn.disabled = true;
+
+    generateAIImage(D, A, S);
+
+    generateImageBtn.textContent = 'Generate AI Image';
+    generateImageBtn.disabled = false;
+});
+
+// Automatically generate AI image when the page is loaded
+window.addEventListener('load', () => {
+    const D = parseInt(document.getElementById('informationDensity').value);
+    const A = parseInt(document.getElementById('knowledgeBase').value);
+    const S = parseInt(document.getElementById('cognitiveComplexity').value);
+
+    generateAIImage(D, A, S);
+});
+
+// Automatically regenerate AI image when sliders change
+[informationDensity, knowledgeBase, cognitiveComplexity].forEach(slider => {
+    slider.addEventListener('input', () => {
+        const D = parseInt(document.getElementById('informationDensity').value);
+        const A = parseInt(document.getElementById('knowledgeBase').value);
+        const S = parseInt(document.getElementById('cognitiveComplexity').value);
+
+        generateAIImage(D, A, S);
+    });
+});
+

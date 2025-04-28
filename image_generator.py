@@ -96,7 +96,7 @@ class ConsciousnessImageGenerator:
             details=details,
             quality=quality
         )
-        
+    
         # Add negative prompt to avoid unwanted elements
         negative_prompt = "blurry, low quality, distorted, ugly, bad anatomy, text, watermark"
         
