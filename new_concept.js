@@ -84,3 +84,86 @@ function updateSpaceConcept() {
 [informationDensitySlider, knowledgeBaseSlider, cognitiveComplexitySlider].forEach(slider => {
     slider.addEventListener('input', updateSpaceConcept);
 });
+
+// Enhance interactivity and animation for stars
+let stars = [];
+const maxStars = 200;
+
+// Initialize stars
+function initializeStars() {
+    for (let i = 0; i < maxStars; i++) {
+        stars.push({
+            x: Math.random() * newCanvas.width,
+            y: Math.random() * newCanvas.height,
+            size: Math.random() * 2 + 1,
+            alpha: Math.random(),
+            glow: Math.random() > 0.9, // Some stars glow forever
+            lastInteraction: Date.now(),
+        });
+    }
+}
+
+// Update stars based on interaction and time
+function updateStars() {
+    const now = Date.now();
+    stars.forEach(star => {
+        if (!star.glow && now - star.lastInteraction > 5000) {
+            star.alpha -= 0.01; // Gradually disappear
+            if (star.alpha < 0) star.alpha = 0;
+        } else {
+            star.alpha = Math.min(star.alpha + 0.01, 1); // Regain brightness
+        }
+    });
+}
+
+// Draw stars with updated properties
+function drawStars() {
+    stars.forEach(star => {
+        newCtx.beginPath();
+        newCtx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        newCtx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+        newCtx.fill();
+    });
+}
+
+// Handle movement to add stars and change arrangement
+newCanvas.addEventListener('mousemove', event => {
+    const rect = newCanvas.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    stars.push({
+        x,
+        y,
+        size: Math.random() * 2 + 1,
+        alpha: 1,
+        glow: false,
+        lastInteraction: Date.now(),
+    });
+
+    if (stars.length > maxStars) stars.shift(); // Limit star count
+
+    stars.forEach(star => {
+        const dx = x - star.x;
+        const dy = y - star.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < 50) {
+            star.x += dx * 0.1;
+            star.y += dy * 0.1;
+            star.lastInteraction = Date.now();
+        }
+    });
+});
+
+// Animation loop
+function animate() {
+    newCtx.clearRect(0, 0, newCanvas.width, newCanvas.height);
+    drawSpaceConcept(D, A, S); // Redraw background
+    updateStars();
+    drawStars();
+    requestAnimationFrame(animate);
+}
+
+initializeStars();
+animate();
