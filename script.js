@@ -1004,8 +1004,42 @@ function updateVisualization() {
     }
 }
 
-// Move the Generate AI Image button below the first image generation
-//const firstImageSection = document.querySelector('.canvas-container');
-//if (firstImageSection) {
-//    firstImageSection.appendChild(generateImageBtn);
-//}
+// Add event listener for the new Generate AI Image button
+const generateImageBtn = document.getElementById('generateImageBtn');
+const generatedImageContainer = document.getElementById('generatedImageContainer');
+const generatedImage = document.getElementById('generatedImage');
+
+generateImageBtn.addEventListener('click', async () => {
+    const D = parseInt(informationDensity.value);
+    const A = parseInt(knowledgeBase.value);
+    const S = parseInt(cognitiveComplexity.value);
+
+    // Show loading indicator
+    generateImageBtn.textContent = 'Generating...';
+    generateImageBtn.disabled = true;
+
+    try {
+        // Simulate image generation (replace with actual API call or logic)
+        const response = await fetch('/generate-image', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ D, A, S })
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to generate image');
+        }
+
+        const data = await response.json();
+        generatedImage.src = data.imageUrl; // Assuming the API returns an image URL
+        generatedImageContainer.style.display = 'block';
+    } catch (error) {
+        console.error('Error generating image:', error);
+        alert('Failed to generate image. Please try again.');
+    } finally {
+        // Reset button state
+        generateImageBtn.textContent = 'Generate AI Image';
+        generateImageBtn.disabled = false;
+    }
+});
+
