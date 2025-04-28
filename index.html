@@ -14,12 +14,14 @@
         </header>
 
         <main>
-            <div class="csci-display"">
-                <span>CSCI Value: </span>
-                <span id="csciValue">0</span>
-            </div>
-
             <div class="controls">
+                <h2>Consciousness Profile</h2>
+
+                <div class="csci-display"">
+                    <span>CSCI Value: </span>
+                    <span id="csciValue">0</span>
+                </div>
+
                 <div class="parameter-group">
                     <label for="informationDensity">Information Density (D)</label>
                     <input type="range" id="informationDensity" min="0" max="100" value="50">
@@ -41,6 +43,7 @@
 
             <div class="canvass-container"> 
                 <h2>Canvass</h2> 
+                <button id="generateBtn" class="btn">Generate Image</button>
                 <div class="quantum-toggle">
                     <label for="quantumMode">Quantum Mode</label>
                     <div class="toggle-switch">
@@ -48,8 +51,6 @@
                         <span class="toggle-slider"></span>
                     </div>
                 </div>
-
-                <button id="generateBtn" class="btn">Generate Image</button>
 
                 <canvas id="artCanvas"></canvas>
                 <div class="loading-indicator">
