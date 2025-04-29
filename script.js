@@ -832,6 +832,7 @@ function drawArt(D, A, S) {
 let animationFrameId = null;
 function animate() {
     if (quantumMode.checked) {
+        handleQuantumModeSpecificBehavior(); // Call the new function
         drawArt(
             parseInt(informationDensity.value),
             parseInt(knowledgeBase.value),
@@ -844,6 +845,25 @@ function animate() {
             animationFrameId = null;
         }
     }
+}
+
+// Add a new function to handle Quantum Mode-specific behavior
+function handleQuantumModeSpecificBehavior() {
+    // Example: Add unique quantum effects or interactions
+    quantumState.particles.forEach(particle => {
+        // Introduce quantum tunneling effect
+        if (Math.random() < 0.01) {
+            particle.x = Math.random() * canvas.width;
+            particle.y = Math.random() * canvas.height;
+        }
+
+        // Add glowing effect based on energy
+        particle.color = `hsl(${Math.random() * 360}, 80%, ${50 + particle.energy * 10}%)`;
+    });
+
+    // Update consciousness field with quantum-specific dynamics
+    quantumState.consciousnessField.frequency += 0.01;
+    quantumState.consciousnessField.strength *= 1.01;
 }
 
 // Event listeners for sliders
