@@ -1,11 +1,21 @@
+import torch
+from diffusers import StableDiffusionPipeline
+from transformers import CLIPTokenizer
+import numpy as np
+import json
 import os
-import random
-import math
-from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 class ConsciousnessImageGenerator:
     def __init__(self):
-        # Load consciousness prompt templates for prompts (even though we won't use real AI generation)
+        # Initialize with a lightweight model for local running
+        self.model_id = "CompVis/stable-diffusion-v1-4"
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.pipe = StableDiffusionPipeline.from_pretrained(
+            self.model_id,
+            torch_dtype=torch.float16 if self.device == "cuda" else torch.float32
+        ).to(self.device)
+        
+        # Load consciousness prompt templates
         self.prompt_templates = {
             'base': [
                 "cosmic consciousness, {style}, {elements}, {mood}, {details}, {quality}",
@@ -46,10 +56,10 @@ class ConsciousnessImageGenerator:
         complexity = (d * 0.4 + a * 0.3 + s * 0.3)
         
         # Select template based on complexity
-        base_template = random.choice(self.prompt_templates['base'])
+        base_template = np.random.choice(self.prompt_templates['base'])
         
         # Select style based on parameters
-        style = random.choice(self.prompt_templates['style'])
+        style = np.random.choice(self.prompt_templates['style'])
         if d > 0.7:  # High information density
             style += ", data visualization"
         if a > 0.7:  # High knowledge base
@@ -65,18 +75,18 @@ class ConsciousnessImageGenerator:
             elements.append("knowledge structures")
         if s > 0.5:
             elements.append("cognitive patterns")
-        elements.append(random.choice(self.prompt_templates['elements']))
+        elements.append(np.random.choice(self.prompt_templates['elements']))
         
         # Select mood based on overall complexity
-        mood = random.choice(self.prompt_templates['mood'])
+        mood = np.random.choice(self.prompt_templates['mood'])
         if complexity > 0.8:
             mood += ", transcendent"
         elif complexity > 0.6:
             mood += ", enlightened"
             
         # Select details and quality
-        details = random.choice(self.prompt_templates['details'])
-        quality = random.choice(self.prompt_templates['quality'])
+        details = np.random.choice(self.prompt_templates['details'])
+        quality = np.random.choice(self.prompt_templates['quality'])
         
         # Construct final prompt
         prompt = base_template.format(
@@ -92,141 +102,19 @@ class ConsciousnessImageGenerator:
         
         return prompt, negative_prompt
 
-    def generate_image(self, D, A, S, output_path="static/images/generated_image.png"):
-        """Generate an image based on consciousness parameters using basic PIL drawing"""
+    def generate_image(self, D, A, S, output_path="generated_image.png"):
+        """Generate an image based on consciousness parameters"""
         prompt, negative_prompt = self.generate_consciousness_prompt(D, A, S)
         
-        # Create the directory if it doesn't exist
-        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        # Generate image
+        image = self.pipe(
+            prompt=prompt,
+            negative_prompt=negative_prompt,
+            num_inference_steps=50,
+            guidance_scale=7.5
+        ).images[0]
         
-        # Create a procedural image based on the parameters
-        # Image size
-        width, height = 512, 512
-        
-        # Create base image with gradient background
-        image = Image.new('RGB', (width, height), color=(0, 0, 0))
-        draw = ImageDraw.Draw(image)
-        
-        # Use parameters to determine colors
-        d_hue = int(D * 3.6) % 360  # 0-360 color wheel
-        a_saturation = 50 + int(A / 2)  # 50-100% saturation
-        s_brightness = 30 + int(S / 2)  # 30-80% brightness
-        
-        # Draw complex gradient background
-        for y in range(height):
-            for x in range(width):
-                # Calculate distance from center
-                cx, cy = width / 2, height / 2
-                distance = math.sqrt((x - cx) ** 2 + (y - cy) ** 2) / (math.sqrt(cx**2 + cy**2))
-                angle = math.atan2(y - cy, x - cx) * 180 / math.pi
-                
-                # Adjust hue based on angle and distance
-                hue = (d_hue + int(angle) + int(distance * 30)) % 360
-                
-                # Convert HSV to RGB
-                h = hue / 360
-                s = a_saturation / 100
-                v = (s_brightness / 100) * (1 - distance * 0.5)
-                
-                i = int(h * 6)
-                f = h * 6 - i
-                p = v * (1 - s)
-                q = v * (1 - f * s)
-                t = v * (1 - (1 - f) * s)
-                
-                if i % 6 == 0:
-                    r, g, b = v, t, p
-                elif i % 6 == 1:
-                    r, g, b = q, v, p
-                elif i % 6 == 2:
-                    r, g, b = p, v, t
-                elif i % 6 == 3:
-                    r, g, b = p, q, v
-                elif i % 6 == 4:
-                    r, g, b = t, p, v
-                else:
-                    r, g, b = v, p, q
-                
-                # Draw pixel
-                draw.point((x, y), fill=(int(r * 255), int(g * 255), int(b * 255)))
-        
-        # Draw elements based on S (Cognitive Complexity)
-        num_elements = 5 + int(S / 10)
-        for i in range(num_elements):
-            # Circular elements
-            x = random.randint(0, width - 1)
-            y = random.randint(0, height - 1)
-            size = 10 + int((A / 100) * 50)  # Size based on A (Knowledge Base)
-            color_offset = random.randint(0, 359)
-            element_hue = (d_hue + color_offset) % 360
-            
-            # Convert to RGB
-            h = element_hue / 360
-            s = random.uniform(0.7, 1.0)
-            v = random.uniform(0.7, 1.0)
-            
-            i = int(h * 6)
-            f = h * 6 - i
-            p = v * (1 - s)
-            q = v * (1 - f * s)
-            t = v * (1 - (1 - f) * s)
-            
-            if i % 6 == 0:
-                r, g, b = v, t, p
-            elif i % 6 == 1:
-                r, g, b = q, v, p
-            elif i % 6 == 2:
-                r, g, b = p, v, t
-            elif i % 6 == 3:
-                r, g, b = p, q, v
-            elif i % 6 == 4:
-                r, g, b = t, p, v
-            else:
-                r, g, b = v, p, q
-            
-            fill_color = (int(r * 255), int(g * 255), int(b * 255))
-            draw.ellipse((x - size, y - size, x + size, y + size), fill=fill_color)
-        
-        # Add information density patterns
-        for i in range(int(D / 5)):
-            # Draw connecting lines
-            x1 = random.randint(0, width - 1)
-            y1 = random.randint(0, height - 1)
-            x2 = random.randint(0, width - 1)
-            y2 = random.randint(0, height - 1)
-            line_hue = (d_hue + i * 10) % 360
-            
-            # Convert to RGB
-            h = line_hue / 360
-            s = 0.8
-            v = 0.8
-            
-            i = int(h * 6)
-            f = h * 6 - i
-            p = v * (1 - s)
-            q = v * (1 - f * s)
-            t = v * (1 - (1 - f) * s)
-            
-            if i % 6 == 0:
-                r, g, b = v, t, p
-            elif i % 6 == 1:
-                r, g, b = q, v, p
-            elif i % 6 == 2:
-                r, g, b = p, v, t
-            elif i % 6 == 3:
-                r, g, b = p, q, v
-            elif i % 6 == 4:
-                r, g, b = t, p, v
-            else:
-                r, g, b = v, p, q
-            
-            line_color = (int(r * 255), int(g * 255), int(b * 255), 128)
-            draw.line((x1, y1, x2, y2), fill=line_color, width=1 + int(A / 50))
-        
-        # Apply blur effect for smoother appearance
-        image = image.filter(ImageFilter.GaussianBlur(radius=1.5))
-        
-        # Save the image
+        # Save image
         image.save(output_path)
         
         return {
@@ -240,4 +128,4 @@ if __name__ == "__main__":
     generator = ConsciousnessImageGenerator()
     result = generator.generate_image(75, 80, 85)
     print(f"Generated image with prompt: {result['prompt']}")
-    print(f"Saved to: {result['path']}")
+    print(f"Saved to: {result['path']}") 
