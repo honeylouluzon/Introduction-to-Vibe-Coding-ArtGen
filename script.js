@@ -894,6 +894,12 @@ quantumMode.addEventListener('change', () => {
             cancelAnimationFrame(animationFrameId);
         }
         animate();
+        // Draw once when disabling
+        drawArt(
+            parseInt(informationDensity.value),
+            parseInt(knowledgeBase.value),
+            parseInt(cognitiveComplexity.value)
+        );
     } else {
         // Stop animation
         if (animationFrameId) {
@@ -908,6 +914,16 @@ quantumMode.addEventListener('change', () => {
         );
     }
 });
+
+// Ensure the slider click toggles the checkbox and triggers the quantum mode functionality
+const toggleSlider = document.querySelector('.toggle-slider');
+
+if (toggleSlider) {
+    toggleSlider.addEventListener('click', () => {
+        quantumMode.checked = !quantumMode.checked;
+        quantumMode.dispatchEvent(new Event('change'));
+    });
+}
 
 // Save artwork
 saveBtn.addEventListener('click', () => {

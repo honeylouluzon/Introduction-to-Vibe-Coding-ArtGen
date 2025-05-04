@@ -14,8 +14,12 @@ document.querySelector('.ai-image').appendChild(newCanvasContainer);
 
 const newCtx = newCanvas.getContext('2d');
 
+async function pause(duration) {
+    return new Promise(resolve => setTimeout(resolve, duration));
+}
+
 // Function to draw space-themed concept
-function drawSpaceConcept(D, A, S) {
+async function drawSpaceConcept(D, A, S) {
     newCtx.clearRect(0, 0, newCanvas.width, newCanvas.height);
 
     // Background gradient
@@ -34,17 +38,20 @@ function drawSpaceConcept(D, A, S) {
         newCtx.arc(x, y, size, 0, Math.PI * 2);
         newCtx.fillStyle = `rgba(255, 255, 255, ${Math.random()})`;
         newCtx.fill();
+        await pause(10); // Pause for 10ms between drawing stars
     }
 
-    // Draw planets
+    // Draw planets with limited colors closer to real planets
+    const planetColors = ['#ffcc00', '#ff6600', '#cc3300', '#6699ff', '#33cc33'];
     for (let i = 0; i < A / 10; i++) {
         const x = Math.random() * newCanvas.width;
         const y = Math.random() * newCanvas.height;
         const radius = Math.random() * 30 + 10;
         newCtx.beginPath();
         newCtx.arc(x, y, radius, 0, Math.PI * 2);
-        newCtx.fillStyle = `hsl(${Math.random() * 360}, 70%, 50%)`;
+        newCtx.fillStyle = planetColors[Math.floor(Math.random() * planetColors.length)];
         newCtx.fill();
+        await pause(20); // Pause for 20ms between drawing planets
     }
 
     // Draw nebulae
@@ -59,6 +66,7 @@ function drawSpaceConcept(D, A, S) {
         newCtx.beginPath();
         newCtx.arc(x, y, radius, 0, Math.PI * 2);
         newCtx.fill();
+        await pause(30); // Pause for 30ms between drawing nebulae
     }
 }
 
@@ -73,11 +81,11 @@ const informationDensitySlider = document.getElementById('informationDensity');
 const knowledgeBaseSlider = document.getElementById('knowledgeBase');
 const cognitiveComplexitySlider = document.getElementById('cognitiveComplexity');
 
-function updateSpaceConcept() {
+async function updateSpaceConcept() {
     const D = parseInt(informationDensitySlider.value);
     const A = parseInt(knowledgeBaseSlider.value);
     const S = parseInt(cognitiveComplexitySlider.value);
-    drawSpaceConcept(D, A, S);
+    await drawSpaceConcept(D, A, S);
 }
 
 // Add event listeners to sliders
@@ -156,10 +164,25 @@ newCanvas.addEventListener('mousemove', event => {
     });
 });
 
+// Set canvas to maintain a proportional aspect ratio
+function resizeCanvas() {
+    const container = newCanvasContainer;
+    const aspectRatio = 9 / 16; // Example: 16:9 aspect ratio
+    newCanvas.width = container.offsetWidth;
+    newCanvas.height = newCanvas.width * aspectRatio;
+    drawSpaceConcept(D, A, S); // Redraw the content after resizing
+}
+
+// Add event listener for window resize
+window.addEventListener('resize', resizeCanvas);
+
+// Initial resize to fit the container
+resizeCanvas();
+
 // Slow down the animation loop by 60%
-function animate() {
+async function animate() {
     newCtx.clearRect(0, 0, newCanvas.width, newCanvas.height);
-    drawSpaceConcept(D, A, S); // Redraw background
+    await drawSpaceConcept(D, A, S); // Redraw background
     updateStars();
     drawStars();
     setTimeout(() => requestAnimationFrame(animate), 16.67 * 1.6); // 60% slower
