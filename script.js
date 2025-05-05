@@ -1189,7 +1189,7 @@ async function renderAIImage() {
         aiCtx.fillRect(0, 0, aiCanvas.width, aiCanvas.height);
         aiCtx.fillStyle = 'white';
         aiCtx.font = '20px Arial';
-        aiCtx.fillText('Image failed to load', 10, 50);
+        aiCtx.fillText('Fallback: Image not available', 10, 50);
     };
 }
 
