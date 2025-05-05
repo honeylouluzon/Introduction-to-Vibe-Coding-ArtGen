@@ -38,7 +38,7 @@ async function drawSpaceConcept(D, A, S) {
         newCtx.arc(x, y, size, 0, Math.PI * 2);
         newCtx.fillStyle = `rgba(255, 255, 255, ${Math.random()})`;
         newCtx.fill();
-        await pause(10); // Pause for 10ms between drawing stars
+        await pause(80); // Pause for 10ms between drawing stars
     }
 
     // Draw planets with limited colors closer to real planets
@@ -51,7 +51,7 @@ async function drawSpaceConcept(D, A, S) {
         newCtx.arc(x, y, radius, 0, Math.PI * 2);
         newCtx.fillStyle = planetColors[Math.floor(Math.random() * planetColors.length)];
         newCtx.fill();
-        await pause(20); // Pause for 20ms between drawing planets
+        await pause(90); // Pause for 20ms between drawing planets
     }
 
     // Draw nebulae
@@ -66,7 +66,7 @@ async function drawSpaceConcept(D, A, S) {
         newCtx.beginPath();
         newCtx.arc(x, y, radius, 0, Math.PI * 2);
         newCtx.fill();
-        await pause(30); // Pause for 30ms between drawing nebulae
+        await pause(100); // Pause for 30ms between drawing nebulae
     }
 }
 
@@ -185,7 +185,7 @@ async function animate() {
     await drawSpaceConcept(D, A, S); // Redraw background
     updateStars();
     drawStars();
-    setTimeout(() => requestAnimationFrame(animate), 16.67 * 1.6); // 60% slower
+    setTimeout(() => requestAnimationFrame(animate), 16.67 * 2); // 100% slower
 }
 
 initializeStars();
