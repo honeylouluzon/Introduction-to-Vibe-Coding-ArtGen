@@ -28,45 +28,55 @@ async function drawSpaceConcept(D, A, S) {
     gradient.addColorStop(1, `hsl(${(D * 3.6 + 180) % 360}, 50%, 10%)`);
     newCtx.fillStyle = gradient;
     newCtx.fillRect(0, 0, newCanvas.width, newCanvas.height);
-
+    
+    runloop = 0;
     // Draw stars
-    for (let i = 0; i < D; i++) {
-        const x = Math.random() * newCanvas.width;
-        const y = Math.random() * newCanvas.height;
-        const size = Math.random() * 2 + 1;
-        newCtx.beginPath();
-        newCtx.arc(x, y, size, 0, Math.PI * 2);
-        newCtx.fillStyle = `rgba(255, 255, 255, ${Math.random()})`;
-        newCtx.fill();
-        await pause(80); // Pause for 10ms between drawing stars
-    }
+    while (runloop < (D + A + S)) {
+        if (runloop < D){
+            const x = Math.random() * newCanvas.width;
+            const y = Math.random() * newCanvas.height;
+            const size = Math.random() * 2 + 1;
+            newCtx.beginPath();
+            newCtx.arc(x, y, size, 0, Math.PI * 2);
+            newCtx.fillStyle = `rgba(255, 255, 255, ${Math.random()})`;
+            newCtx.fill();
+            await pause(80); // Pause for 10ms between drawing stars
+        }
 
-    // Draw planets with limited colors closer to real planets
-    const planetColors = ['#ffcc00', '#ff6600', '#cc3300', '#6699ff', '#33cc33'];
-    for (let i = 0; i < A / 10; i++) {
-        const x = Math.random() * newCanvas.width;
-        const y = Math.random() * newCanvas.height;
-        const radius = Math.random() * 30 + 10;
-        newCtx.beginPath();
-        newCtx.arc(x, y, radius, 0, Math.PI * 2);
-        newCtx.fillStyle = planetColors[Math.floor(Math.random() * planetColors.length)];
-        newCtx.fill();
-        await pause(90); // Pause for 20ms between drawing planets
-    }
+        // Draw planets with limited colors closer to real planets
+        const planetColors = ['#ffcc00', '#ff6600', '#cc3300', '#6699ff', '#33cc33'];
+        if ( runloop < (A / 10)) {
+            const x = Math.random() * newCanvas.width;
+            const y = Math.random() * newCanvas.height;
+            const radius = Math.random() * 30 + 10;
+            newCtx.beginPath();
+            newCtx.arc(x, y, radius, 0, Math.PI * 2);
+            newCtx.fillStyle = planetColors[Math.floor(Math.random() * planetColors.length)];
+            newCtx.fill();
+            await pause(90); // Pause for 20ms between drawing planets
+       }
 
-    // Draw nebulae
-    for (let i = 0; i < S / 10; i++) {
-        const x = Math.random() * newCanvas.width;
-        const y = Math.random() * newCanvas.height;
-        const radius = Math.random() * 50 + 20;
-        const gradient = newCtx.createRadialGradient(x, y, 0, x, y, radius);
-        gradient.addColorStop(0, `hsla(${Math.random() * 360}, 70%, 50%, 0.8)`);
-        gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        newCtx.fillStyle = gradient;
-        newCtx.beginPath();
-        newCtx.arc(x, y, radius, 0, Math.PI * 2);
-        newCtx.fill();
-        await pause(100); // Pause for 30ms between drawing nebulae
+        // Draw nebulae
+        if (runloop < (S / 10)) {
+            const x = Math.random() * newCanvas.width;
+            const y = Math.random() * newCanvas.height;
+            const radius = Math.random() * 50 + 20;
+            const gradient = newCtx.createRadialGradient(x, y, 0, x, y, radius);
+            gradient.addColorStop(0, `hsla(${Math.random() * 360}, 70%, 50%, 0.8)`);
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            newCtx.fillStyle = gradient;
+            newCtx.beginPath();
+            newCtx.arc(x, y, radius, 0, Math.PI * 2);
+            newCtx.fill();
+            await pause(100); // Pause for 30ms between drawing nebulae
+       }
+        if (runloop>(S/10) && runloop>(A/10) && runloop>D) {
+            runloop = S + A + D;
+            break;
+        }
+        else{
+            runloop++;
+        }
     }
 }
 
