@@ -77,6 +77,7 @@ async function drawSpaceConcept(D, A, S) {
         else{
             runloop++;
         }
+        await pause (50);
     }
 }
 
