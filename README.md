@@ -61,6 +61,10 @@ In cases where the AI-generated image cannot be loaded (e.g., when hosted on Git
 - The fallback ensures a seamless user experience even in environments that do not support dynamic image generation (e.g., GitHub Pages).
 - Users can still interact with the sliders and see the placeholder message update dynamically.
 
+### AI Image Generation Implementation
+
+The `image_generator.js` file is a JavaScript adaptation of the `image_generator.py` script. It was created to enable AI image generation directly in the browser, making the application fully client-facing and eliminating the need for a server. This adaptation ensures that users can experience dynamic image generation without requiring server-side processing.
+
 ## Technical Details
 
 - The application is built using HTML, CSS, and JavaScript.
