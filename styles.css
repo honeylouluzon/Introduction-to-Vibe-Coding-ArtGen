@@ -19,7 +19,7 @@ body {
     font-family: var(--font-family);
     background-color: var(--background-color);
     color: var(--text-color);
-    line-height: 1.6;
+    line-height: 1.2;
 }
 
 .container {
@@ -36,8 +36,8 @@ header {
 header h1 {
     color: var(--primary-color);
     font-size: 2.8em;
-    font-weight: 700;
-    margin-bottom: 10px;
+    font-weight: 500;
+    margin-bottom: 5px;
 }
 
 .controls {
