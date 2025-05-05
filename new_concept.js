@@ -40,7 +40,7 @@ async function drawSpaceConcept(D, A, S) {
             newCtx.arc(x, y, size, 0, Math.PI * 2);
             newCtx.fillStyle = `rgba(255, 255, 255, ${Math.random()})`;
             newCtx.fill();
-            await pause(80); // Pause for 10ms between drawing stars
+            //await pause(80); // Pause for 10ms between drawing stars
         }
 
         // Draw planets with limited colors closer to real planets
