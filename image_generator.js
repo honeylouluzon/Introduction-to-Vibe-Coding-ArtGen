@@ -73,6 +73,9 @@ class ConsciousnessImageGenerator {
     async generateImage(D, A, S, outputPath = "generated_image.png") {
         const { prompt } = this.generateConsciousnessPrompt(D, A, S);
 
+        console.log(`Generating image with parameters: D=${D}, A=${A}, S=${S}`);
+        console.log(`Saving image to: ${outputPath}`);
+
         const canvas = createCanvas(512, 512);
         const ctx = canvas.getContext('2d');
 
@@ -88,6 +91,13 @@ class ConsciousnessImageGenerator {
         // Save image to file
         const buffer = canvas.toBuffer('image/png');
         fs.writeFileSync(outputPath, buffer);
+
+        // Log if the image buffer is created successfully
+        if (buffer) {
+            console.log('Image buffer created successfully.');
+        } else {
+            console.error('Failed to create image buffer.');
+        }
 
         return { prompt, path: outputPath };
     }
