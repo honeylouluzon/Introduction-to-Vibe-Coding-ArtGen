@@ -1,3 +1,4 @@
+
 // New Concept Canvas Setup
 const newCanvas = document.createElement('canvas');
 newCanvas.id = 'newConceptCanvas';
@@ -10,7 +11,7 @@ const newCanvasContainer = document.createElement('div');
 newCanvasContainer.style.marginTop = '20px';
 newCanvasContainer.appendChild(newCanvas);
 
-document.querySelector('.ai-image').appendChild(newCanvasContainer);
+document.querySelector('.animation').appendChild(newCanvasContainer);
 
 const newCtx = newCanvas.getContext('2d');
 
@@ -78,6 +79,8 @@ async function drawSpaceConcept(D, A, S) {
             runloop++;
         }
         await pause (50);
+        updateStars();
+        drawStars();
     }
 }
 
@@ -194,8 +197,8 @@ resizeCanvas();
 async function animate() {
     newCtx.clearRect(0, 0, newCanvas.width, newCanvas.height);
     await drawSpaceConcept(D, A, S); // Redraw background
-    updateStars();
-    drawStars();
+    //updateStars();
+    //drawStars();
     setTimeout(() => requestAnimationFrame(animate), 16.67 * 2); // 100% slower
 }
 

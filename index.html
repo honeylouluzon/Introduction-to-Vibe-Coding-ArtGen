@@ -16,8 +16,7 @@
         <main>
             <div class="controls">
                 <h2>Consciousness Profile</h2>
-
-                <div class="csci-display"">
+                <div class="csci-display" style="margin-bottom: 16px;margin-top: 16px; border:2px solid var(--primary-color);">
                     <span>CSCI Value: </span>
                     <span id="csciValue">0</span>
                 </div>
@@ -42,14 +41,11 @@
             </div>
 
             <div class="canvass-container"> 
-                <p></p>
-                <h2>Consciousness Art</h2> 
-                <div class="quantum-toggle">
-                    <label for="quantumMode">Quantum Mode</label>
-                    <div class="toggle-switch">
-                        <input type="checkbox" id="quantumMode" onclick="this.checked = !this.checked;">
-                        <span class="toggle-slider" onclick="document.getElementById('quantumMode').click();"></span>
-                    </div>
+                <h2>Consciousness Art</h2>
+                <label for="quantumMode">Quantum Mode</label>
+                <div class="toggle-switch" style="margin-bottom: 16px;margin-top: 16px;">
+                    <input type="checkbox" id="quantumMode" onclick="this.checked = !this.checked;">
+                    <span class="toggle-slider" onclick="document.getElementById('quantumMode').click();"></span>
                 </div>
                 <canvas id="artCanvas"></canvas>
                 <div class="loading-indicator">
@@ -75,17 +71,18 @@
                     <button id="saveImageBtn">Save Image</button>
                 </div>
             </div>
-            <div class="ai-image" style="width: 100%; max-width: 600px; margin: 0 auto;">
-                <p></p>
-                <h2>AI Image</h2>
-                <div id="generatedImageContainer" style="margin-top: 20px; display: none;">
-                    <img id="generatedImage" alt="Generated AI Image" style="width: 100%; height: auto; border: 1px solid #ddd; border-radius: 8px;">
-                </div>
-                <div class="ai-canvas" style="margin-top: 20px;">
-                    <canvas id="aiCanvas" style="width: 100%; height: 300px; border: 1px solid #ddd; border-radius: 8px;"></canvas>
-                </div>
+
+            <div class="animation" >
+                <h2>Interactive Animation</h2>
             </div>
-            <div></div>
+
+            <div class="ai-image">
+                <h2>AI Image Generation</h2>
+                <button id="generateAIImageBtn" class="btn" style="margin-bottom: 16px;margin-top: 16px;">Generate AI Image</button>
+                <canvas id="aiImageCanvas" width="512" height="300" style="width: 100%; height: 300px; border: 1px solid #ddd; border-radius: 8px; display: block; margin-bottom: 16px;"></canvas>
+                <div id="aiImageFallback" style="display: none; color: #888; text-align: center;">Fallback: Image not available</div>
+            </div>
+
 
             <div class="actions">
                 <button id="saveBtn" class="btn">Save Art</button>
@@ -94,7 +91,8 @@
         </main>
     </div>
     <script src="script.js"></script>
-    <script src="new_concept.js"></script>
+    <script src="generate_animation.js"></script>
+    <script src="generate_ai_image.js"></script>
 
 </body>
 </html>

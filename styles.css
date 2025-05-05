@@ -35,12 +35,28 @@ header {
 
 header h1 {
     color: var(--primary-color);
-    font-size: 2.1em;
-    font-weight: 800;
+    font-size: 2.2em;
+    font-weight: 900;
     margin-bottom: 5px;
 }
 
 .controls {
+    background: var(--secondary-color);
+    padding: var(--spacing);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    margin-bottom: var(--spacing);
+}
+
+.animation {
+    background: var(--secondary-color);
+    padding: var(--spacing);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    margin-bottom: var(--spacing);
+}
+
+.ai-image {
     background: var(--secondary-color);
     padding: var(--spacing);
     border-radius: var(--border-radius);
@@ -130,14 +146,13 @@ input:checked + .toggle-slider:before {
     transform: translateX(14px);
 }
 
-.canvas-container {
-    position: relative;
-    background: white;
+
+.canvass-container {
+    background: var(--secondary-color);
     padding: var(--spacing);
     border-radius: var(--border-radius);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     margin-bottom: var(--spacing);
-    border: 2px solid var(--primary-color);
 }
 
 #artCanvas {

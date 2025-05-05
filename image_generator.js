@@ -110,3 +110,7 @@ class ConsciousnessImageGenerator {
     console.log(`Generated image with prompt: ${result.prompt}`);
     console.log(`Saved to: ${result.path}`);
 })();
+
+
+
+
