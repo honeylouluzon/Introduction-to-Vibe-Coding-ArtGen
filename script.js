@@ -1184,6 +1184,12 @@ async function renderAIImage() {
 
     img.onerror = () => {
         console.error('Failed to load image from path:', path);
+        aiCtx.clearRect(0, 0, aiCanvas.width, aiCanvas.height);
+        aiCtx.fillStyle = 'gray';
+        aiCtx.fillRect(0, 0, aiCanvas.width, aiCanvas.height);
+        aiCtx.fillStyle = 'white';
+        aiCtx.font = '20px Arial';
+        aiCtx.fillText('Image failed to load', 10, 50);
     };
 }
 
