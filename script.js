@@ -1149,3 +1149,42 @@ window.addEventListener('load', () => {
     });
 });
 
+// Initialize the new AI canvas
+const aiCanvas = document.getElementById('aiCanvas');
+const aiCtx = aiCanvas.getContext('2d');
+
+// Function to generate and render AI image on the new canvas
+async function renderAIImage() {
+    const D = parseInt(informationDensity.value);
+    const A = parseInt(knowledgeBase.value);
+    const S = parseInt(cognitiveComplexity.value);
+
+    // Use ConsciousnessImageGenerator to generate an image
+    const generator = new ConsciousnessImageGenerator();
+    const { prompt, path } = await generator.generateImage(D, A, S);
+
+    // Load the generated image onto the canvas
+    const img = new Image();
+    img.src = path;
+    img.onload = () => {
+        aiCtx.clearRect(0, 0, aiCanvas.width, aiCanvas.height);
+        aiCtx.drawImage(img, 0, 0, aiCanvas.width, aiCanvas.height);
+
+        // Overlay thoughts using llm.js
+        const inputText = `Generated prompt: ${prompt}`;
+        generateThoughts(inputText, D / 100, A / 100, S / 100).then(thoughts => {
+            aiCtx.font = '16px Arial';
+            aiCtx.fillStyle = 'white';
+            aiCtx.fillText(thoughts, 10, aiCanvas.height - 20);
+        });
+    };
+}
+
+// Add event listener to dynamically update the AI canvas
+[informationDensity, knowledgeBase, cognitiveComplexity].forEach(slider => {
+    slider.addEventListener('input', renderAIImage);
+});
+
+// Initial render on page load
+window.addEventListener('load', renderAIImage);
+
