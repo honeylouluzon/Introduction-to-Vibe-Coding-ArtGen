@@ -1163,7 +1163,10 @@ async function renderAIImage() {
     const generator = new ConsciousnessImageGenerator();
     const { prompt, path } = await generator.generateImage(D, A, S);
 
-    // Load the generated image onto the canvas
+    console.log('Rendering AI Image with values:', { D, A, S });
+    console.log('Generated prompt:', prompt);
+    console.log('Image path:', path);
+
     const img = new Image();
     img.src = path;
     img.onload = () => {
@@ -1177,6 +1180,10 @@ async function renderAIImage() {
             aiCtx.fillStyle = 'white';
             aiCtx.fillText(thoughts, 10, aiCanvas.height - 20);
         });
+    };
+
+    img.onerror = () => {
+        console.error('Failed to load image from path:', path);
     };
 }
 
